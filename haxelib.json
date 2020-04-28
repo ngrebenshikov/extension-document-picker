@@ -1,0 +1,13 @@
+{
+  "name": "extension-document-picker",
+  "url": "https://github.com/ngrebenshikov/extension-document-picker",
+  "license": "MIT",
+  "tags": ["ios", "android"],
+  "description": "OpenFL/Lime extension to open documents/files on iOS and Android",
+  "version": "1.0.0",
+  "releasenote": "Initial release",
+  "contributors": ["ngrebenshikov"],
+  "dependencies": {
+
+  }
+}
