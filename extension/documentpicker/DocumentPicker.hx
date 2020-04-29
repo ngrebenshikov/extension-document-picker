@@ -34,7 +34,7 @@ class DocumentPicker {
 	}
 	
 	
-	private static var native_pick= CFFI.load ("extension_document_picker", "extension_documt_picer_pick", 2);
+	private static var native_pick= CFFI.load ("extension_document_picker", "extension_document_picker_pick", 2);
 	
 	#if android
 	private static var extension_sample_method_jni = JNI.createStaticMethod ("org.haxe.extension.Extension", "sampleMethod", "(I)I");

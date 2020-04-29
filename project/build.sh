@@ -1,3 +1,3 @@
 #!/bin/sh
-lime rebuild . ios
-lime rebuild . ios -debug
+haxelib run lime rebuild . ios
+haxelib run lime rebuild . ios -debug

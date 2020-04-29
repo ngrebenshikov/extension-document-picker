@@ -26,4 +26,4 @@ DEFINE_ENTRY_POINT (extension_document_picker_main);
 
 
 
-extern "C" int extension_register_prims () { return 0; }
+extern "C" int extension_document_picker_register_prims () { return 0; }

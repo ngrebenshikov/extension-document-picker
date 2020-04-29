@@ -27,7 +27,8 @@
 		<outdir name="../ndll/${BINDIR}"/>
 		<ext value=".ndll" if="windows || mac || linux"/>
 		<files id="common"/>
-		
+		<files id="iphone"/>
+
 	</target>
 	
 	<target id="default">

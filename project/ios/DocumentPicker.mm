@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #include <hx/CFFI.h>
 
+#include "DocumentPickerDelegate.h"
 
 namespace extension_document_picker {
     void pick(value haxeAllowedUTIs, value callback) {
@@ -16,10 +17,13 @@ namespace extension_document_picker {
             [allowedUTIs addObject:[NSString stringWithUTF8String:val_string(val_array_i(haxeAllowedUTIs, i))]];
         }
 
-        UIDocumentPicerViewController *controller = [[UIDocumentPicerViewController alloc] initWithDocumentTypes:allowedUTIs inMode:UIDocumentPickerModeImport];
-        DocumentPickerDelegate * delegate = [[DocumentPickerDelegate alloc] initWithCallback: callback];
+        UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:allowedUTIs inMode:UIDocumentPickerModeImport];
+        DocumentPickerDelegate * pickerDelegate = [[DocumentPickerDelegate alloc] initWithCallback: callback];
 
-        [controller delegate:delegate];
+        picker.delegate = pickerDelegate;
+        picker.modalPresentationStyle = UIModalPresentationFormSheet;
+
+        [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:picker animated:YES completion:nil];
 
     }
 }
