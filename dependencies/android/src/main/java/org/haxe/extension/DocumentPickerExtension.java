@@ -8,7 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.util.Log;
+import android.net.Uri;
 
+import java.net.URISyntaxException;
+
+import org.haxe.extension.Extension;
+import org.haxe.lime.HaxeObject;
 
 /* 
 	You can use the Android Extension class in order to hook
@@ -37,12 +43,18 @@ import android.view.View;
 	back to Haxe from Java.
 */
 public class DocumentPickerExtension extends Extension {
-	
-	
-	public static int sampleMethod (int inputValue) {
-		
-		return inputValue * 100;
-		
+
+	private static final int PICKER_REQUEST = 50000;
+
+	static private HaxeObject callback;
+
+	public static void pick (String[] types, HaxeObject callback) {
+//		Log.e("document-picker", "pick");
+		DocumentPickerExtension.callback = callback;
+		Intent picker = new Intent();
+		picker.setType("*/*");
+		picker.setAction(Intent.ACTION_GET_CONTENT);
+		Extension.mainActivity.startActivityForResult(picker, PICKER_REQUEST);
 	}
 	
 	
@@ -52,7 +64,22 @@ public class DocumentPickerExtension extends Extension {
 	 * from it.
 	 */
 	public boolean onActivityResult (int requestCode, int resultCode, Intent data) {
-		
+
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
+			Uri uri = data.getData();
+			if (uri != null && callback != null) {
+				try {
+					callback.call1("callback", org.haxe.extension.documentpicker.PathUtil.getPath(Extension.mainContext, uri));
+				} catch (URISyntaxException e) {
+					Log.e("document-picker", e.toString());
+					callback.call1("callback", null);
+				}
+				callback = null;
+			}
+		}
+
 		return true;
 		
 	}
