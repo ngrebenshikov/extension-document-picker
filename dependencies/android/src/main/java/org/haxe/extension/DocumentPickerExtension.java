@@ -70,12 +70,7 @@ public class DocumentPickerExtension extends Extension {
 		if (requestCode == PICKER_REQUEST && resultCode == Activity.RESULT_OK) {
 			Uri uri = data.getData();
 			if (uri != null && callback != null) {
-				try {
-					callback.call1("callback", org.haxe.extension.documentpicker.PathUtil.getPath(Extension.mainContext, uri));
-				} catch (URISyntaxException e) {
-					Log.e("document-picker", e.toString());
-					callback.call1("callback", null);
-				}
+				callback.call1("callback", org.haxe.extension.documentpicker.FileUtils.saveUriToCacheFile(Extension.mainContext, uri).getPath());
 				callback = null;
 			}
 		}
